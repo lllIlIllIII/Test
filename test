@@ -1,3 +1,5 @@
+--Test
+
 if game.PlaceId == 2753915549 then
         World1 = true
     elseif game.PlaceId == 4442272183 then
@@ -1404,7 +1406,13 @@ function Click()
     game:GetService('VirtualUser'):CaptureController()
     game:GetService('VirtualUser'):Button1Down(Vector2.new(851, 158))
     end
-
+function Click()
+        game:GetService("RunService").RenderStepped:Connect(function()
+                    game:GetService'VirtualUser':CaptureController()
+                end)
+                    game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
+            end
+       
  function attack()
       require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.CameraShaker).CameraShakeInstance.CameraShakeState = {FadingIn = 3,FadingOut = 2,Sustained = 0,Inactive =1}
       game:GetService'VirtualUser':CaptureController()
@@ -2346,6 +2354,150 @@ spawn(function()
    end)
    
 
+
+spawn(function()
+while wait() do
+if _G.Auto_Farm_Level then
+if _G.Select_Mode_Farm == "Normal Farm" then
+pcall(function()
+ CheckLevel()
+ if not string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+ game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+ if BypassTP then
+ if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 2000 then
+ BTP(CFrameQuest)
+ wait(3)
+ elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude < 2000 then
+ TP(CFrameQuest)
+ end
+ else
+   TP(CFrameQuest)
+ end
+ if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+ game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest",NameQuest,LevelQuest)
+ end
+ elseif string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+ for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+ if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+ if v.Name == Ms then
+ repeat game:GetService("RunService").Heartbeat:wait()
+ EquipWeapon(_G.SelectWeapon)
+ Fastattack = true
+ TP(v.HumanoidRootPart.CFrame * MethodFarm)
+ v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+ v.HumanoidRootPart.Transparency = 1
+ v.Humanoid.JumpPower = 0
+ v.Humanoid.WalkSpeed = 0
+ v.HumanoidRootPart.CanCollide = false
+--v.Humanoid:ChangeState(11)
+--v.Humanoid:ChangeState(14)
+ FarmPos = v.HumanoidRootPart.CFrame
+ MonFarm = v.Name
+ Click()
+ if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
+ v.Humanoid.Animator:Destroy()
+ end
+ until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name) or game.Players.LocalPlayer.PlayerGui.Main.Quest.Visible == false
+ Fastattack = false
+ end
+ end
+ end
+ for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
+ if string.find(v.Name,NameMon) then
+ if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
+ TP(v.CFrame * MethodFarm)
+ end
+ end
+ end
+ end
+ end)
+elseif _G.Select_Mode_Farm == "No Quest" then
+pcall(function()
+ if BypassTP then
+ if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude > 2000 then
+ BTP(CFrameMon)
+ wait(3)
+ elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameMon.Position).Magnitude < 2000 then
+ TP(CFrameMon)
+ end
+ else
+   TP(CFrameMon)
+ end
+ CheckLevel()
+ if game.Workspace.Enemies:FindFirstChild(Ms) then
+ for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
+ if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+ if v.Name == Ms then
+ repeat game:GetService("RunService").Heartbeat:wait()
+ EquipWeapon(_G.SelectWeapon)
+ Fastattack = true
+ TP(v.HumanoidRootPart.CFrame * MethodFarm)
+ v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+ v.HumanoidRootPart.Transparency = 1
+ v.Humanoid.JumpPower = 0
+ v.Humanoid.WalkSpeed = 0
+ v.HumanoidRootPart.CanCollide = false
+--v.Humanoid:ChangeState(11)
+--v.Humanoid:ChangeState(14)
+ FarmPos = v.HumanoidRootPart.CFrame
+ MonFarm = v.Name
+ Click()
+ if v.Humanoid.Health <= 0 and v.Humanoid:FindFirstChild("Animator") then
+ v.Humanoid.Animator:Destroy()
+ end
+ until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or not game:GetService("Workspace").Enemies:FindFirstChild(v.Name)
+ end
+ end
+ Fastattack = false
+ end
+ else
+   for i,v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
+ if string.find(v.Name,NameMon) then
+ if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
+ TP(v.CFrame * MethodFarm)
+ end
+ end
+ end
+ end
+ end)
+elseif _G.Select_Mode_Farm == "Near Farm Mode" then
+pcall(function()
+ for i,v in pairs (game.Workspace.Enemies:GetChildren()) do
+ if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+ if v.Name then
+ if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v:FindFirstChild("HumanoidRootPart").Position).Magnitude <= 1000 then
+ repeat task.wait(0.0001)
+ EquipWeapon(_G.SelectWeapon)
+ Fastattack = true
+local posX = 0
+local posY = 30
+local posZ = 0
+ TP(v.HumanoidRootPart.CFrame * CFrame.new(posX, posY, posZ))
+ v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+ v.HumanoidRootPart.Transparency = 1
+ v.Humanoid.JumpPower = 0
+ v.Humanoid.WalkSpeed = 0
+ v.HumanoidRootPart.CanCollide = false
+--v.Humanoid:ChangeState(11)
+--v.Humanoid:ChangeState(14)
+ FarmPos = v.HumanoidRootPart.CFrame
+ MonFarm = v.Name
+ Click()
+ until not _G.Auto_Farm_Level or not v.Parent or v.Humanoid.Health <= 0 or not game.Workspace.Enemies:FindFirstChild(v.Name)
+ end
+ Fastattack = false
+ end
+ end
+ end
+ end)
+end
+end
+end
+end)
+
+
+
+--[[
 spawn(function()
     while wait() do
         if _G.Auto_Farm_Level then
@@ -2505,7 +2657,7 @@ spawn(function()
 end
 end
 end)
-
+]]--
     Main:Toggle("Auto Farm Select Mode",_G.Auto_Farm_Level,function(value)
             _G.Auto_Farm_Level = value  
             StopTween(_G.Auto_Farm_Level)
