@@ -1,4 +1,4 @@
---Test
+-- testNew
 
 if game.PlaceId == 2753915549 then
         World1 = true
@@ -1929,7 +1929,7 @@ Race:Button("Auto Complete Angel Trial",function(t)
 _G.Select_Mode_Farm = "Normal Farm"
 
 Main:Dropdown("Select Mode Farm", {
- "Normal Farm","Fast Mode","No Quest"},function(value)
+ "Normal Farm","Near Farm Mode","No Quest"},function(value)
  _G.Select_Mode_Farm = value
 end)
 
@@ -2353,7 +2353,58 @@ spawn(function()
     end)
    end)
    
+   AutoMisc:Toggle("Bring Mob", true, function(Value)
+    BringMobs = Value
+    end)
+    
+task.spawn(function()
+while true do wait()
+if setscriptable then
+setscriptable(game.Players.LocalPlayer,"SimulationRadius",true)
+end
+if sethiddenproperty then
+sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
+end
+end
+end)
+local bringfrec = 250
+function InMyNetWork(object)
+if isnetworkowner then
+return isnetworkowner(object)
+else
+if (object.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= bringfrec then
+return true
+end
+return false
+end
+end
 
+
+    task.spawn(function()
+    while task.wait() do
+    if BringMobs or _G.Auto_Farm_Level then
+    pcall(function()
+     for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+     if v.Name == MonFarm and (v.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 240 then
+     if InMyNetWork(v.HumanoidRootPart) then
+     v.HumanoidRootPart.CFrame = FarmPos
+     v.Humanoid.JumpPower = 0
+     v.Humanoid.WalkSpeed = 0
+     v.HumanoidRootPart.Size = Vector3.new(60,60,60)
+     v.HumanoidRootPart.CanCollide = false
+     v.Head.CanCollide = false
+    --v.Humanoid:ChangeState(11)
+    --v.Humanoid:ChangeState(14)
+     if v.Humanoid:FindFirstChild("Animator") then
+     v.Humanoid.Animator:Destroy()
+     end
+     end
+     end
+     end
+     end)
+    end
+    end
+    end)
 
 spawn(function()
 while wait() do
