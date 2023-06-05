@@ -2326,6 +2326,28 @@ spawn(function()
 end)
 
 spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if Fastattack == true then
+            game.Players.LocalPlayer.Character.Stun.Value = 0
+            game.Players.LocalPlayer.Character.Humanoid.Sit = false
+            game.Players.LocalPlayer.Character.Busy.Value = false        
+        end
+    end)
+   end)
+   
+   spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if Fastattack then
+             pcall(function()
+                game:GetService'VirtualUser':CaptureController()
+                game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
+            end)
+        end
+    end)
+   end)
+   
+
+spawn(function()
     while wait() do
         if _G.Auto_Farm_Level then
 			if _G.Select_Mode_Farm == "Normal Farm" then
@@ -2352,6 +2374,7 @@ spawn(function()
 										repeat wait()
 											if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
 												EquipWeapon(_G.SelectWeapon)
+                                                Click()
 												PosMon = v.HumanoidRootPart.CFrame
 												AutoHaki()
 												v.HumanoidRootPart.CanCollide = false
@@ -2359,15 +2382,18 @@ spawn(function()
 												v.Head.CanCollide = false
 												v.HumanoidRootPart.Size = Vector3.new(50,50,50)
 												StartMagnet = true
+                                                FastAttack = true
 												TP(v.HumanoidRootPart.CFrame * MethodFarm)
 												game:GetService'VirtualUser':CaptureController()
 												game:GetService'VirtualUser':Button1Down(Vector2.new(0,1,0,1))
 											else
 												StartMagnet = false
+
 												game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 											end
 										until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-									end
+									    FastAttack = false
+                                    end
 								end
 							end
 						else
@@ -2400,6 +2426,7 @@ spawn(function()
 											repeat wait()
 												if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
 													EquipWeapon(_G.SelectWeapon)
+                                                    Click()
 													AutoHaki()
 													PosMon = v.HumanoidRootPart.CFrame
 													v.HumanoidRootPart.CanCollide = false
@@ -2407,6 +2434,7 @@ spawn(function()
 													v.Head.CanCollide = false
 													v.HumanoidRootPart.Size = Vector3.new(50,50,50)
 													StartMagnet = true
+                                                    FastAttack = true
 													TP(v.HumanoidRootPart.CFrame * MethodFarm)
 													game:GetService'VirtualUser':CaptureController()
 													game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
@@ -2415,7 +2443,8 @@ spawn(function()
 													game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
 												end
 											until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
-										end
+										    FastAttack = false
+                                        end
 									end
 								end
 							else
@@ -2446,6 +2475,7 @@ spawn(function()
 									if v.Humanoid.Health > 0 then
 										repeat wait()
 											EquipWeapon(_G.SelectWeapon)
+                                            Click()
 											AutoHaki()
 											PosMon = v.HumanoidRootPart.CFrame
 											v.HumanoidRootPart.CanCollide = false
@@ -2453,10 +2483,12 @@ spawn(function()
 											v.Head.CanCollide = false
 											v.HumanoidRootPart.Size = Vector3.new(50,50,50)
 											StartMagnet = true
+                                            FastAttack = true
 											TP(v.HumanoidRootPart.CFrame * MethodFarm)
 											game:GetService'VirtualUser':CaptureController()
 											game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
 										until not _G.Auto_Farm_Level or v.Humanoid.Health <= 0 or not v.Parent
+                                        FastAttack = false
 									end
 								end
 							end
@@ -9312,26 +9344,21 @@ end)
 
  spawn(function()
     game:GetService('RunService').Stepped:Connect(function()
-        if _G.Smooth then
-game:GetService("ReplicatedStorage").Notification.Visible = false
-game:GetService("ReplicatedStorage").Effect.Container.LevelUp.Visible = false
-game:GetService("ReplicatedStorage").Util.Sound.Visible = false
-game:GetService("ReplicatedStorage").Util.Sound.Storage.Other:FindFirstChild("LevelUp_Proxy").Visible = false
-game:GetService("ReplicatedStorage").Util.Sound.Storage.Other:FindFirstChild("LevelUp").Visible = false
-	game:GetService("ReplicatedStorage").Effect.Container.Respawn.Visible = false
+game:GetService("ReplicatedStorage").Notification:Destroy()
+game:GetService("ReplicatedStorage").Effect.Container.LevelUp:Destroy()
+game:GetService("ReplicatedStorage").Util.Sound:Destroy()
+game:GetService("ReplicatedStorage").Util.Sound.Storage.Other:FindFirstChild("LevelUp_Proxy"):Destroy()
+game:GetService("ReplicatedStorage").Util.Sound.Storage.Other:FindFirstChild("LevelUp"):Destroy()
+	game:GetService("ReplicatedStorage").Effect.Container.Respawn:Destroy()
             for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
                 if v.Name == "CurvedRing" or v.Name == "SwordSlash" or v.Name == "Sounds" or v.Name == "SlashHit" or v.Name == "DamageCounter" then--or v.Name == "SlashHit"
                     v:Destroy() 
                 end
             end
-        end
     end)
 end)
 
-    AutoMisc:Toggle("Camera Shaker",true,function(value)
-        _G.Smooth = value
 
-    end)
     AutoMisc:Toggle("Camera Shaker",true,function(value)
         CameraShaker()
         _G.CameraShaker = value
