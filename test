@@ -8994,12 +8994,36 @@ local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
 request(abcdef)
 end
 
-  AutoMisc:Seperator("Settings")
+AutoMisc:Seperator("Settings")
 
+pcall(function()
+    if _G.anticheat then
+    for i,v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+        if v:IsA("LocalScript") then
+            if v.Name == "General" or v.Name == "Shiftlock"  or v.Name == "FallDamage" or v.Name == "4444" or v.Name == "CamBob" or v.Name == "JumpCD" or v.Name == "Looking" or v.Name == "Run" then
+                v:Destroy()
+            end
+        end
+     end
+     for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerScripts:GetDescendants()) do
+        if v:IsA("LocalScript") then
+            if v.Name == "RobloxMotor6DBugFix" or v.Name == "Clans"  or v.Name == "Codes" or v.Name == "CustomForceField" or v.Name == "MenuBloodSp"  or v.Name == "PlayerList" then
+                v:Destroy()
+            end
+        end
+      end
+    end
+end)
+
+
+    AutoMisc:Toggle("Bypass Anti Cheat",true,function(value)
+        _G.anticheat = value
+    end)
+  
     AutoMisc:Toggle("Bring Mob",true,function(value)
         _G.BringMonster = value
     end)
-    
+  
 AutoMisc:Toggle("Bring Mob [V2]",false,function(value)
  _G.BringExtra = value
 end)
