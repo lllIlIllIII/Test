@@ -1,5 +1,4 @@
--- testNew
-
+--new
 if game.PlaceId == 2753915549 then
         World1 = true
     elseif game.PlaceId == 4442272183 then
@@ -1536,7 +1535,7 @@ end)
 function TP(Pos)
             Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
             if game.Players.LocalPlayer.Character.Humanoid.Sit == true then game.Players.LocalPlayer.Character.Humanoid.Sit = false end
-            pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/210, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
+            pcall(function() tween = game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart,TweenInfo.new(Distance/400, Enum.EasingStyle.Linear),{CFrame = Pos}) end)
             tween:Play()
             if Distance <= 250 then
                 tween:Cancel()
@@ -2367,7 +2366,7 @@ sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge)
 end
 end
 end)
-local bringfrec = 250
+local bringfrec = 1250
 function InMyNetWork(object)
 if isnetworkowner then
 return isnetworkowner(object)
@@ -3798,10 +3797,10 @@ spawn( -- Auto Fruit Drop
         end)
     end
 
-Main:Toggle("Auto Farm Nearest",_G.NeareastFarm,function(value)
-        _G.NeareastFarm = value
-        StopTween(_G.NeareastFarm)
-end)
+-- Main:Toggle("Auto Farm Nearest",_G.NeareastFarm,function(value)
+--         _G.NeareastFarm = value
+--         StopTween(_G.NeareastFarm)
+-- end)
 
 spawn(function()
  while wait(.1) do
