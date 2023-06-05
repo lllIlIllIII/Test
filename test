@@ -1401,10 +1401,9 @@ function GetWeaponInventory(Weaponname)
 end
 
 function Click()
-	local VirtualUser = game:GetService('VirtualUser')
-	VirtualUser:CaptureController()
-	VirtualUser:ClickButton1(Vector2.new(851, 158), game:GetService("Workspace").Camera.CFrame)
-end
+    game:GetService('VirtualUser'):CaptureController()
+    game:GetService('VirtualUser'):Button1Down(Vector2.new(851, 158))
+    end
 
  function attack()
       require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework.CameraShaker).CameraShakeInstance.CameraShakeState = {FadingIn = 3,FadingOut = 2,Sustained = 0,Inactive =1}
