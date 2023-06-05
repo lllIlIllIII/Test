@@ -1,5 +1,5 @@
 
-local Window = loadstring(Game:HttpGet'https://raw.githubusercontent.com/lllIlIllIII/ScriptRoblox/main/TurboHub/Library.lua')()
+local Update = loadstring(Game:HttpGet'https://raw.githubusercontent.com/lllIlIllIII/ScriptRoblox/main/TurboHub/Library.lua')()
 local Library = Update:Window("","",Enum.KeyCode.RightControl);
 
 local Main = Library:Tab("Main","11446825283")
